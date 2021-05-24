@@ -2,7 +2,7 @@ version: '3'
 
 services:
     db:
-        image: mysql:5.7
+        image: mariadb:10
         volumes:
             - database:/var/lib/mysql
             - ./config/start.sql:/docker-entrypoint-initdb.d/start.sql
@@ -10,6 +10,15 @@ services:
         restart: always
         environment:
           MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+
+    redis: 
+        image: redist:5-alpine
+        restart: always
+        loggins:
+          driver: "json-file"
+          options: 
+            max-size: "10Mb"
+            max-file: "5"
 
     pathfinder:
         # build:

@@ -4,8 +4,8 @@ function replace_setting() {
 }
 echo "Replacing settings"
 replace_setting "^SERVER\s*=\s*.*$" "SERVER = ${SERVER}" "/var/www/pathfinder/app/environment.ini"
-replace_setting "^DB_PF_DNS\s*=\s*.*$" "DB_PF_DNS                         =   mysql:host=db;port=3306;" "/var/www/pathfinder/app/environment.ini"
-replace_setting "^DB_UNIVERSE_DNS\s*=\s*.*$" "DB_UNIVERSE_DNS                         =   mysql:host=db;port=3306;" "/var/www/pathfinder/app/environment.ini"
+replace_setting "^DB_PF_DNS\s*=\s*.*$" "DB_PF_DNS                         =   mysql:host=${DB_HOST};port=3306;" "/var/www/pathfinder/app/environment.ini"
+replace_setting "^DB_UNIVERSE_DNS\s*=\s*.*$" "DB_UNIVERSE_DNS                         =   mysql:host=${DB_HOST};port=3306;" "/var/www/pathfinder/app/environment.ini"
 replace_setting "^URL\s*=\s*.*$" "URL                         =   ${SCHEME}${URL}" "/var/www/pathfinder/app/environment.ini"
 replace_setting "DB_PF_PASS\s*=\s*.*" "DB_PF_PASS                  =   ${MYSQL_PASSWORD}" "/var/www/pathfinder/app/environment.ini"
 replace_setting "DB_PF_USER\s*=\s*.*" "DB_PF_USER                  =   ${MYSQL_USER}" "/var/www/pathfinder/app/environment.ini"
@@ -25,7 +25,7 @@ if [ "${SETUP}" != "True" ]; then
 fi
 
 if [ "${UseRedis}" != "False" ]; then
- replace_setting "CACHE\s*=\s*.*" "CACHE           =   redis=localhost:6379:1" "/var/www/pathfinder/app/config.ini"
+ replace_setting "CACHE\s*=\s*.*" "CACHE           =   redis=${REDIS_HOST}:6379:1" "/var/www/pathfinder/app/config.ini"
 fi
 
 if [ "${UseWebSockets}" != "False" ]; then

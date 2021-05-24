@@ -27,7 +27,6 @@ RUN apt-get install -y \
 	nginx \ 
 	zip \ 
 	git \ 
-	redis-server \
 	curl \
 	cron 
 
@@ -69,8 +68,8 @@ COPY ./config/default /etc/nginx/sites-available/
 COPY ./config/www.conf /etc/php/7.2/fpm/pool.d/
 
 # CONFIGURE REDIS
-COPY ./config/redis.conf /etc/redis/
-RUN chmod 755 /etc/redis/redis.conf
+#COPY ./config/redis.conf /etc/redis/
+#RUN chmod 755 /etc/redis/redis.conf
 
 # CONFIGURE PHP7.2-FPM
 COPY ./config/php.ini /etc/php/7.2/fpm/
