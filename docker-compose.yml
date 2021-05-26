@@ -8,28 +8,44 @@ services:
             - ./config/start.sql:/docker-entrypoint-initdb.d/start.sql
             - ./config/eve_universe.sql:/docker-entrypoint-initdb.d/eve_universe.sql
         restart: always
+        networks:
+            - pathfinder-network
+        volumes:
+            - "mariadb-data:/var/lib/mysql"
         environment:
           MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
 
     redis: 
-        image: redist:5-alpine
+        image: redis:5-alpine
         restart: always
-        loggins:
+        networks:
+            - pathfinder-network
+        logging:
           driver: "json-file"
           options: 
             max-size: "10Mb"
             max-file: "5"
 
     pathfinder:
-        # build:
-        #   context: .
-        #   dockerfile: Dockerfile
+        build:
+           context: .
+           dockerfile: Dockerfile
+           args:
+             VERSION: master
         restart: always
-        image: kryptedgaming/pathfinder:latest
+        #image: kryptedgaming/pathfinder:latest
         env_file: .env
+        depends_on:
+            - db
+            - redis
+        networks:
+            - pathfinder-network
         ports:
             - "8000:80"
             - "8020:8020" 
 
 volumes:
-    database: {}
+    mariadb-data: 
+
+networks:
+    pathfinder-network:

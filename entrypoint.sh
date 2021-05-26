@@ -25,7 +25,14 @@ if [ "${SETUP}" != "True" ]; then
 fi
 
 if [ "${UseRedis}" != "False" ]; then
+ #echo "Setting Redis settings: "
+ #echo "Updating config.ini redis cache"
  replace_setting "CACHE\s*=\s*.*" "CACHE           =   redis=${REDIS_HOST}:6379:1" "/var/www/pathfinder/app/config.ini"
+
+ #echo "updating session cache"
+ replace_setting "SESSION_CACHE\s*=\s*.*" "SESSION_CACHE = default" "/var/www/pathfinder/app/config.ini"
+ echo "setting php.ini session.save_path"
+ sed -E -i -e "s/session.save_path\s*=\s*.*/session.save_path = \"tcp:\/\/${REDIS_HOST}:6379?database=0\"/g" /etc/php/7.2/fpm/php.ini
 fi
 
 if [ "${UseWebSockets}" != "False" ]; then
@@ -81,6 +88,6 @@ echo "Starting Services"
 crontab /home/default_crontab
 service cron start
 service php7.2-fpm start
-service redis-server start
+#service redis-server start
 service pathfinder-websocket start
 nginx -g "daemon off;"
