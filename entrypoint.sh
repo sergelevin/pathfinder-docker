@@ -95,8 +95,10 @@ if [ "${AddAdminChar}" != "False" ]; then
 fi
 
 echo "Starting Services"
-crontab /home/default_crontab
-service cron start
+if [ "${ENABLE_CRON}" != "False" ]; then
+ crontab /home/default_crontab
+ service cron start
+fi
 service php7.2-fpm start
 #service redis-server start
 service pathfinder-websocket start
