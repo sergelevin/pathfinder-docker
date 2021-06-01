@@ -37,9 +37,9 @@ fi
 
 if [ "${SET_ROUTE_TTL}" != "False" ]; then
  #For remote redis cache, need to set the ttl for each route to 1.
- replace_setting "GET\|POST\s*\/api\/@controller\/@action\s*\[ajax\]\s*=\s*.*" "GET|POST \/api\/@contoller\/@action                \[ajax\] = {{ @NAMESPACE }}\\\\Controller\\\\Api\\\\@controller->@action, ${ROUTE_TTL}, 512" "/var/www/pathfinder/app/routes.ini"
- replace_setting "GET\|POST\s*\/api\/@controller\/@action\/@arg1\s*\[ajax\]\s*=\s*.*" "GET|POST \/api\/@contoller\/@action\/@arg1          \[ajax\] = {{ @NAMESPACE }}\\\\Controller\\\\Api\\\\@controller->@action, ${ROUTE_TTL}, 512" "/var/www/pathfinder/app/routes.ini"
- replace_setting "GET\|POST\s*\/api\/@controller\/@action\/@arg1\/@arg2\s*\[ajax\]\s*=\s*.*" "GET|POST \/api\/@contoller\/@action\/@arg1\/@arg2    \[ajax\] = {{ @NAMESPACE }}\\\\Controller\\\\Api\\\\@controller->@action, ${ROUTE_TTL}, 512" "/var/www/pathfinder/app/routes.ini"
+ replace_setting "GET\|POST\s*\/api\/@controller\/@action\s*\[ajax\]\s*=\s*.*" "GET|POST \/api\/@controller\/@action                [ajax] = {{ @NAMESPACE }}\\\\Controller\\\\Api\\\\@controller->@action, ${ROUTE_TTL}, 512" "/var/www/pathfinder/app/routes.ini"
+ replace_setting "GET\|POST\s*\/api\/@controller\/@action\/@arg1\s*\[ajax\]\s*=\s*.*" "GET|POST \/api\/@controller\/@action\/@arg1          [ajax] = {{ @NAMESPACE }}\\\\Controller\\\\Api\\\\@controller->@action, ${ROUTE_TTL}, 512" "/var/www/pathfinder/app/routes.ini"
+ replace_setting "GET\|POST\s*\/api\/@controller\/@action\/@arg1\/@arg2\s*\[ajax\]\s*=\s*.*" "GET|POST \/api\/@controller\/@action\/@arg1\/@arg2    [ajax] = {{ @NAMESPACE }}\\\\Controller\\\\Api\\\\@controller->@action, ${ROUTE_TTL}, 512" "/var/www/pathfinder/app/routes.ini"
  replace_setting "POST\s*\/api\/Map\/updateUnloadData\s*=\s*.*" "POST \/api\/Map\/updateUnloadData                         = {{ @NAMESPACE }}\\\\Controller\\\\Api\\\\Map->updateUnloadData, ${ROUTE_TTL}, 512" "/var/www/pathfinder/app/routes.ini"
  replace_setting "\/api\/rest\/@controller\*\s*\[ajax\]\s*=\s*.*" "\/api\/rest\/@controller*                          [ajax] = {{ @NAMESPACE }}\\\\Controller\\\\Api\\\\Rest\\\\@controller, ${ROUTE_TTL}, 512" "/var/www/pathfinder/app/routes.ini"
  replace_setting "\/api\/rest\/@controller\/@id\s*\[ajax\]\s*=\s*.*" "\/api\/rest\/@controller\/@id                       [ajax] = {{ @NAMESPACE }}\\\\Controller\\\\Api\\\\Rest\\\\@controller, ${ROUTE_TTL}, 512" "/var/www/pathfinder/app/routes.ini"
