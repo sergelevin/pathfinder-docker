@@ -33,14 +33,16 @@ if [ "${UseRedis}" != "False" ]; then
  replace_setting "SESSION_CACHE\s*=\s*.*" "SESSION_CACHE = default" "/var/www/pathfinder/app/config.ini"
  echo "setting php.ini session.save_path"
  sed -E -i -e "s/session.save_path\s*=\s*.*/session.save_path = \"tcp:\/\/${REDIS_HOST}:6379?database=0\"/g" /etc/php/7.2/fpm/php.ini
+fi
 
+if [ "${SET_ROUTE_TTL}" != "False" ]; then
  #For remote redis cache, need to set the ttl for each route to 1.
- #replace_setting "GET\|POST\s*\/api\/@controller\/@action\s*\[ajax\]\s*=\s*.*" "GET|POST \/api\/@contoller\/@action                \[ajax\] = {{ @NAMESPACE }}\\\\Controller\\\\Api\\\\@controller->@action, 1, 512" "/var/www/pathfinder/app/routes.ini"
- #replace_setting "GET\|POST\s*\/api\/@controller\/@action\/@arg1\s*\[ajax\]\s*=\s*.*" "GET|POST \/api\/@contoller\/@action\/@arg1          \[ajax\] = {{ @NAMESPACE }}\\\\Controller\\\\Api\\\\@controller->@action, 1, 512" "/var/www/pathfinder/app/routes.ini"
- #replace_setting "GET\|POST\s*\/api\/@controller\/@action\/@arg1\/@arg2\s*\[ajax\]\s*=\s*.*" "GET|POST \/api\/@contoller\/@action\/@arg1\/@arg2    \[ajax\] = {{ @NAMESPACE }}\\\\Controller\\\\Api\\\\@controller->@action, 1, 512" "/var/www/pathfinder/app/routes.ini"
- #replace_setting "POST\s*\/api\/Map\/updateUnloadData\s*=\s*.*" "POST \/api\/Map\/updateUnloadData                         = {{ @NAMESPACE }}\\\\Controller\\\\Api\\\\Map->updateUnloadData, 1, 512" "/var/www/pathfinder/app/routes.ini"
- #replace_setting "\/api\/rest\/@controller\*\s*\[ajax\]\s*=\s*.*" "\/api\/rest\/@controller*                          [ajax] = {{ @NAMESPACE }}\\\\Controller\\\\Api\\\\Rest\\\\@controller, 1, 512" "/var/www/pathfinder/app/routes.ini"
- #replace_setting "\/api\/rest\/@controller\/@id\s*\[ajax\]\s*=\s*.*" "\/api\/rest\/@controller\/@id                       [ajax] = {{ @NAMESPACE }}\\\\Controller\\\\Api\\\\Rest\\\\@controller, 1, 512" "/var/www/pathfinder/app/routes.ini"
+ replace_setting "GET\|POST\s*\/api\/@controller\/@action\s*\[ajax\]\s*=\s*.*" "GET|POST \/api\/@contoller\/@action                \[ajax\] = {{ @NAMESPACE }}\\\\Controller\\\\Api\\\\@controller->@action, ${ROUTE_TTL}, 512" "/var/www/pathfinder/app/routes.ini"
+ replace_setting "GET\|POST\s*\/api\/@controller\/@action\/@arg1\s*\[ajax\]\s*=\s*.*" "GET|POST \/api\/@contoller\/@action\/@arg1          \[ajax\] = {{ @NAMESPACE }}\\\\Controller\\\\Api\\\\@controller->@action, ${ROUTE_TTL}, 512" "/var/www/pathfinder/app/routes.ini"
+ replace_setting "GET\|POST\s*\/api\/@controller\/@action\/@arg1\/@arg2\s*\[ajax\]\s*=\s*.*" "GET|POST \/api\/@contoller\/@action\/@arg1\/@arg2    \[ajax\] = {{ @NAMESPACE }}\\\\Controller\\\\Api\\\\@controller->@action, ${ROUTE_TTL}, 512" "/var/www/pathfinder/app/routes.ini"
+ replace_setting "POST\s*\/api\/Map\/updateUnloadData\s*=\s*.*" "POST \/api\/Map\/updateUnloadData                         = {{ @NAMESPACE }}\\\\Controller\\\\Api\\\\Map->updateUnloadData, ${ROUTE_TTL}, 512" "/var/www/pathfinder/app/routes.ini"
+ replace_setting "\/api\/rest\/@controller\*\s*\[ajax\]\s*=\s*.*" "\/api\/rest\/@controller*                          [ajax] = {{ @NAMESPACE }}\\\\Controller\\\\Api\\\\Rest\\\\@controller, ${ROUTE_TTL}, 512" "/var/www/pathfinder/app/routes.ini"
+ replace_setting "\/api\/rest\/@controller\/@id\s*\[ajax\]\s*=\s*.*" "\/api\/rest\/@controller\/@id                       [ajax] = {{ @NAMESPACE }}\\\\Controller\\\\Api\\\\Rest\\\\@controller, ${ROUTE_TTL}, 512" "/var/www/pathfinder/app/routes.ini"
 fi
 
 if [ "${UseWebSockets}" != "False" ]; then
