@@ -35,6 +35,10 @@ if [ "${UseRedis}" != "False" ]; then
  sed -E -i -e "s/session.save_path\s*=\s*.*/session.save_path = \"tcp:\/\/${REDIS_HOST}:6379?database=0\"/g" /etc/php/7.2/fpm/php.ini
 fi
 
+if [ "${PHP_MAX_INPUT_VARS}" != "" ]; then
+ sed -E -i -e "s/max_input_vars\s*=\s*.*/max_input_vars = ${PHP_MAX_INPUT_VARS}/g" /etc/php/7.2/fpm/php.ini
+fi
+
 if [ "${SET_ROUTE_TTL}" != "False" ]; then
  #For remote redis cache, need to set the ttl for each route to 1.
  replace_setting "GET\|POST\s*\/api\/@controller\/@action\s*\[ajax\]\s*=\s*.*" "GET|POST \/api\/@controller\/@action                [ajax] = {{ @NAMESPACE }}\\\\Controller\\\\Api\\\\@controller->@action, ${ROUTE_TTL}, 512" "/var/www/pathfinder/app/routes.ini"
