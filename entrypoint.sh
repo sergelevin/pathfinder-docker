@@ -91,6 +91,18 @@ echo "SEND_RALLY_SLACK_ENABLED        =   ${CorpSEND_RALLY_SLACK_ENABLED}" >> /v
 echo "SEND_HISTORY_DISCORD_ENABLED    =   ${CorpSEND_HISTORY_DISCORD_ENABLED}" >> /var/www/pathfinder/conf/pathfinder.ini
 echo "SEND_RALLY_DISCORD_ENABLED      =   ${CorpSEND_RALLY_DISCORD_ENABLED}" >> /var/www/pathfinder/conf/pathfinder.ini
 echo "SEND_RALLY_Mail_ENABLED         =   ${CorpSEND_RALLY_Mail_ENABLED}" >> /var/www/pathfinder/conf/pathfinder.ini
+echo "[PATHFINDER.MAP.ALLIANCE]" >> /var/www/pathfinder/conf/pathfinder.ini
+echo "LIFETIME                        =   ${allianceLIFETIME}" >> /var/www/pathfinder/conf/pathfinder.ini
+echo "MAX_COUNT                       =   ${allianceMAX_COUNT}" >> /var/www/pathfinder/conf/pathfinder.ini
+echo "MAX_SHARED                      =   ${allianceMAX_SHARED}" >> /var/www/pathfinder/conf/pathfinder.ini
+echo "MAX_SYSTEMS                     =   ${allianceMAX_SYSTEMS}" >> /var/www/pathfinder/conf/pathfinder.ini
+echo "LOG_ACTIVITY_ENABLED            =   ${allianceLOG_ACTIVITY_ENABLED}" >> /var/www/pathfinder/conf/pathfinder.ini
+echo "LOG_HISTORY_ENABLED             =   ${allianceLOG_HISTORY_ENABLED}" >> /var/www/pathfinder/conf/pathfinder.ini
+echo "SEND_HISTORY_SLACK_ENABLED      =   ${allianceSEND_HISTORY_SLACK_ENABLED}" >> /var/www/pathfinder/conf/pathfinder.ini
+echo "SEND_RALLY_SLACK_ENABLED        =   ${allianceSEND_RALLY_SLACK_ENABLED}" >> /var/www/pathfinder/conf/pathfinder.ini
+echo "SEND_HISTORY_DISCORD_ENABLED    =   ${allianceSEND_HISTORY_DISCORD_ENABLED}" >> /var/www/pathfinder/conf/pathfinder.ini
+echo "SEND_RALLY_DISCORD_ENABLED      =   ${allianceSEND_RALLY_DISCORD_ENABLED}" >> /var/www/pathfinder/conf/pathfinder.ini
+echo "SEND_RALLY_Mail_ENABLED         =   ${allianceSEND_RALLY_Mail_ENABLED}" >> /var/www/pathfinder/conf/pathfinder.ini
 
 if [ "${AddAdminChar}" != "False" ]; then
  echo "[PATHFINDER.ROLES]" >> /var/www/pathfinder/conf/pathfinder.ini
