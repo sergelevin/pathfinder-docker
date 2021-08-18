@@ -9,7 +9,7 @@ replace_setting "^DB_UNIVERSE_DNS\s*=\s*.*$" "DB_UNIVERSE_DNS                   
 replace_setting "^URL\s*=\s*.*$" "URL                         =   ${SCHEME}${URL}" "/var/www/pathfinder/app/environment.ini"
 replace_setting "DB_PF_PASS\s*=\s*.*" "DB_PF_PASS                  =   ${MYSQL_PASSWORD}" "/var/www/pathfinder/app/environment.ini"
 replace_setting "DB_PF_USER\s*=\s*.*" "DB_PF_USER                  =   ${MYSQL_USER}" "/var/www/pathfinder/app/environment.ini"
-replace_setting "DB_PF_NAME\s*=\s*.*" "DB_PF_NAME           =   pathfinder" "/var/www/pathfinder/app/environment.ini"
+replace_setting "DB_PF_NAME\s*=\s*.*" "DB_PF_NAME           =   ${DB_NAME}" "/var/www/pathfinder/app/environment.ini"
 replace_setting "DB_UNIVERSE_NAME\s*=\s*.*" "DB_UNIVERSE_NAME           =   eve_universe" "/var/www/pathfinder/app/environment.ini"
 replace_setting "DB_UNIVERSE_PASS\s*=\s*.*" "DB_UNIVERSE_PASS            =   ${MYSQL_PASSWORD}" "/var/www/pathfinder/app/environment.ini"
 replace_setting "DB_UNIVERSE_USER\s*=\s*.*" "DB_UNIVERSE_USER            =   ${MYSQL_USER}" "/var/www/pathfinder/app/environment.ini"
@@ -27,12 +27,12 @@ fi
 if [ "${UseRedis}" != "False" ]; then
  #echo "Setting Redis settings: "
  #echo "Updating config.ini redis cache"
- replace_setting "CACHE\s*=\s*.*" "CACHE           =   redis=${REDIS_HOST}:6379:1:${REDIS_PASSWORD}" "/var/www/pathfinder/app/config.ini"
+ replace_setting "CACHE\s*=\s*.*" "CACHE           =   redis=${REDIS_HOST}:${REDIS_PORT}:${REDIS_DB}:${REDIS_PASSWORD}" "/var/www/pathfinder/app/config.ini"
 
  #echo "updating session cache"
- replace_setting "SESSION_CACHE\s*=\s*.*" "SESSION_CACHE = mysql" "/var/www/pathfinder/app/config.ini"
+ replace_setting "SESSION_CACHE\s*=\s*.*" "SESSION_CACHE = ${SESSION_CACHE}" "/var/www/pathfinder/app/config.ini"
  echo "setting php.ini session.save_path"
- #sed -E -i -e "s/session.save_path\s*=\s*.*/session.save_path = \"tcp:\/\/${REDIS_HOST}:6379?auth=${REDIS_PASSWORD}\"/g" /etc/php/7.2/fpm/php.ini
+ #sed -E -i -e "s/session.save_path\s*=\s*.*/session.save_path = \"tcp:\/\/${REDIS_HOST}:${REDIS_PORT}?auth=${REDIS_PASSWORD}&database=${REDIS_DB}\"/g" /etc/php/7.2/fpm/php.ini
 fi
 
 if [ "${PHP_MAX_INPUT_VARS}" != "" ]; then
