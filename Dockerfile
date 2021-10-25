@@ -38,7 +38,7 @@ RUN apt-get install -y \
 # COPY PATHFINDER
 RUN mkdir /var/www/pathfinder
 RUN mkdir /var/log/cron-www/
-RUN git clone --branch v2.1.2 https://github.com/goryn-clade/pathfinder/ /var/www/pathfinder
+RUN git clone --branch v2.1.4 https://github.com/goryn-clade/pathfinder/ /var/www/pathfinder
 COPY ./config/composer.json /root/.composer/config.json
 RUN chown -R www-data:www-data /var/www/pathfinder
 RUN mkdir /tmp/cache/
