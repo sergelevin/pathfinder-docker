@@ -32,7 +32,8 @@ if [ "${UseRedis}" != "False" ]; then
  #echo "updating session cache"
  replace_setting "SESSION_CACHE\s*=\s*.*" "SESSION_CACHE = ${SESSION_CACHE}" "/var/www/pathfinder/app/config.ini"
  echo "setting php.ini session.save_path"
- sed -E -i -e "s/session.save_path\s*=\s*.*/session.save_path = \"tcp:\/\/${REDIS_HOST}:${REDIS_PORT}\"/g" /etc/php/7.2/fpm/php.ini
+ sed -E -i -e "s/session.save_handler\s*=\s*.*/session.save_handler = redis/g" /etc/php/7.2/fpm/php.ini  
+ sed -E -i -e "s/session.save_path\s*=\s*.*/session.save_path = \"tcp:\/\/${REDIS_HOST}:${REDIS_PORT}\"/g" /etc/php/7.2/fpm/php.ini  
 fi
 
 if [ "${PHP_MAX_INPUT_VARS}" != "" ]; then
