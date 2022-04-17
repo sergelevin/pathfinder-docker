@@ -37,6 +37,6 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          platforms: linux/amd64,linux/arm/v7,linux/arm64
+          platforms: linux/amd64
           push: true
           tags: ${{ secrets.DOCKERHUB_ACCESS_USERNAME }}/pathfinder:${{ env.DOCKER_TAG_NAME }}
