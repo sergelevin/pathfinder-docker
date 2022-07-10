@@ -7,7 +7,7 @@ services:
             - database:/var/lib/mysql
             - ./config/start.sql:/docker-entrypoint-initdb.d/start.sql
             - ./config/eve_universe.sql:/docker-entrypoint-initdb.d/eve_universe.sql
-        restart: always
+        restart: unless-stopped
         networks:
             - pathfinder-network
         volumes:
@@ -17,7 +17,7 @@ services:
 
     redis: 
         image: redis:5-alpine
-        restart: always
+        restart: unless-stopped
         networks:
             - pathfinder-network
         logging:
@@ -32,7 +32,7 @@ services:
            dockerfile: Dockerfile
            args:
              VERSION: master
-        restart: always
+        restart: unless-stopped
         #image: kryptedgaming/pathfinder:latest
         env_file: .env
         depends_on:
